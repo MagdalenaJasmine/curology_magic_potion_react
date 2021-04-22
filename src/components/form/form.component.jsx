@@ -10,18 +10,23 @@ class Form extends React.Component {
       payment: { ccNum: "", exp: "" },
     };
   }
-  twoCalls = (e) => {
-    this.changeHandler(e);
-    this.setTotal(e);
-  };
 
   changeHandler = (event) => {
-    console.log(event.target);
     const { name, value } = event.target;
     this.setState({
       [name]: value,
       // total: cartTotal,
     });
+  };
+  qtyChangeHandler = (event) => {
+    const re = /^[0-9\b]+$/;
+    const { name, value } = event.target;
+    if (value === "" || (re.test(value) && value <= 3)) {
+      this.setState({ qty: value });
+      this.setTotal(event);
+    } else {
+      console.log("Value must be a number");
+    }
   };
   paymentChangeHandler = (event) => {
     const payment = { ...this.state.payment };
@@ -36,7 +41,6 @@ class Form extends React.Component {
   setTotal = (event) => {
     const { value } = event.target;
     let cartTotal = value * 49.99;
-    console.log("total set", event.target, cartTotal);
     this.setState({
       total: cartTotal,
     });
@@ -78,11 +82,13 @@ class Form extends React.Component {
               <input
                 type="text"
                 name="qty"
+                max="3"
                 placeholder="Max 3"
                 value={qty}
-                onChange={this.twoCalls}
+                onChange={this.qtyChangeHandler}
               />
             </label>
+
             <label>
               Total $
               <input
