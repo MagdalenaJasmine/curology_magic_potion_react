@@ -47,7 +47,7 @@ class Form extends React.Component {
     event.preventDefault();
     console.log("submitted");
 
-    fetch("http://localhost:3000/api/magic", {
+    fetch("https://curology-rails-api.herokuapp.com/api/magic", {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
