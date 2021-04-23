@@ -1,5 +1,15 @@
 import React from "react";
 
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+
+const validateFrom = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  return valid;
+};
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -8,25 +18,45 @@ class Form extends React.Component {
       total: 0.0,
       email: "",
       payment: { ccNum: "", exp: "" },
+      errors: {
+        qty: "",
+        email: "",
+      },
     };
   }
 
   changeHandler = (event) => {
     const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "email":
+        errors.email = validEmailRegex.test(value)
+          ? ""
+          : "Please enter a valid email";
+        break;
+      default:
+        break;
+    }
+
     this.setState({
+      errors,
       [name]: value,
-      // total: cartTotal,
     });
   };
   qtyChangeHandler = (event) => {
-    const re = /^[0-9\b]+$/;
+    // const re = /^[0-9\b]+$/;
     const { name, value } = event.target;
-    if (value === "" || (re.test(value) && value <= 3)) {
-      this.setState({ qty: value });
-      this.setTotal(event);
-    } else {
-      console.log("Value must be a number");
-    }
+
+    // if (value === "" || (re.test(value) && value <= 3)) {
+    //   this.setState({ qty: value });
+    //   this.setTotal(event);
+    // } else {
+    //   console.log("Value must be a number");
+    // }
+    this.setState({
+      [name]: value,
+    });
+    this.setTotal(event);
   };
   paymentChangeHandler = (event) => {
     const payment = { ...this.state.payment };
@@ -50,26 +80,29 @@ class Form extends React.Component {
     const { qty, total, email, ccNum, exp } = this.state;
     event.preventDefault();
     console.log("submitted");
-
-    fetch("https://curology-rails-api.herokuapp.com/api/magic", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        qty: qty,
-        total: total,
-        email: email,
-        payment: {
-          ccNum: ccNum,
-          exp: exp,
+    if (validateFrom(this.state.errors)) {
+      fetch("https://curology-rails-api.herokuapp.com/api/magic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
         },
-      }),
-    });
+        body: JSON.stringify({
+          qty: qty,
+          total: total,
+          email: email,
+          payment: {
+            ccNum: ccNum,
+            exp: exp,
+          },
+        }),
+      });
+    } else {
+      console.log("errors");
+    }
   };
 
   render() {
-    const { qty, email, ccNum, exp } = this.state;
+    const { qty, email, ccNum, exp, errors } = this.state;
     const totalPrice = qty * 49.99;
     return (
       <div>
@@ -80,8 +113,10 @@ class Form extends React.Component {
             <label>
               Qty
               <input
-                type="text"
+                type="number"
                 name="qty"
+                required
+                min="1"
                 max="3"
                 placeholder="Max 3"
                 value={qty}
@@ -113,6 +148,9 @@ class Form extends React.Component {
                 value={email}
                 onChange={this.changeHandler}
               />
+              {errors.email.length > 0 && (
+                <span className="error">{errors.email}</span>
+              )}
             </label>
           </div>
           <span>Billing Information</span>
