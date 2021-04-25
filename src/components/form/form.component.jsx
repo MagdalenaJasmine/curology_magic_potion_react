@@ -1,5 +1,8 @@
 import React from "react";
+import CustomButton from "../custom_button/custom-button.component";
+import Divider from "../divider/divider.component";
 import FormInput from "../form-input/form-input";
+import "./form.styles.css";
 
 class Form extends React.Component {
   constructor(props) {
@@ -137,42 +140,44 @@ class Form extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <span>Your Order</span>
-          <div>
+          <span className="headers">Your Order</span>
+          <div className="form-inline">
             <FormInput
               type="number"
               name="qty"
-              label="Quantity"
+              label="Qty*"
               required
               max="3"
               placeholder="Max 3"
               value={qty}
+              error={qtyError}
               changeHandler={this.changeHandler}
             />
-            {qtyError}
             <FormInput
               type="text"
               required
               placeholder="0.00"
               readOnly={true}
-              label="Total $"
+              label="Total Price"
               name="total"
               value={totalPrice}
             />
           </div>
-          <span>Contact</span>
+          <Divider />
+          <span className="headers">Contact</span>
           <div>
             <FormInput
               type="text"
               name="email"
-              label="email"
+              label="Email Address"
               placeholder="Email Address"
               value={email}
+              error={emailError}
               changeHandler={this.changeHandler}
             />
-            {emailError}
           </div>
-          <span>Billing Information</span>
+          <Divider />
+          <span className="headers">Billing Information</span>
           <div>
             <FormInput
               type="text"
@@ -180,24 +185,32 @@ class Form extends React.Component {
               label="Credit Card Number"
               placeholder="Credit Card Number"
               value={ccNum}
+              error={ccNumError}
               changeHandler={this.changeHandler}
             />
-            {ccNumError}
+
             <FormInput
               type="text"
               name="exp"
               label="Expiration Date"
               placeholder="mm/yy"
               value={exp}
+              error={expError}
               changeHandler={this.changeHandler}
             />
-            {expError}
           </div>
+          <Divider />
           <div>
-            <input type="submit" />
+            <CustomButton type="submit" value="Submit Form">
+              Place Your Order
+            </CustomButton>
           </div>
         </form>
-        {backEndErrors ? <div>{backEndErrors}</div> : <div>{success}</div>}
+        {backEndErrors ? (
+          <div className="backend-error">{backEndErrors}</div>
+        ) : (
+          <div className="success-message">{success}</div>
+        )}
       </div>
     );
   }

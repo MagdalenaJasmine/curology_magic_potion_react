@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "../form/form.component";
+import "./homepage.component.css";
 
 const HomePage = () => {
   return (
@@ -7,7 +8,7 @@ const HomePage = () => {
       HOMEPAGE
       <div>Picture</div>
       <div>
-        <Form />
+        <Form className="order-form" />
       </div>
     </div>
   );

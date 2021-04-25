@@ -1,0 +1,33 @@
+.headers {
+  width: 106px;
+  height: 32px;
+  left: 412px;
+  top: 540px;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  color: #000000;
+}
+.backend-error {
+  width: 300px;
+  left: 0px;
+  top: 80.77%;
+  bottom: 0%;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  color: #bd200f;
+}
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}

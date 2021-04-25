@@ -1,0 +1,19 @@
+.custom-button {
+  width: 207px;
+  height: 56px;
+  left: 617px;
+  top: 1119px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #2a605c;
+  border-radius: 4px;
+  color: white;
+}
