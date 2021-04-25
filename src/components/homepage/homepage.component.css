@@ -1,0 +1,15 @@
+.order-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.homepage-image {
+  width: 616px;
+  height: 355px;
+  border-radius: 8px;
+}

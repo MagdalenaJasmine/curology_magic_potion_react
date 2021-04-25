@@ -1,0 +1,21 @@
+.form-input {
+  width: 100%;
+  display: flex;
+  padding: 12px 20px;
+  border: 1px solid #949494;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.form-label {
+  color: #555555;
+}
+.field-error {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+
+  color: #bd200f;
+}

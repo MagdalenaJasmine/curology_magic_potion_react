@@ -1,7 +1,10 @@
 import React from "react";
+import CustomButton from "../custom_button/custom-button.component";
+import Divider from "../divider/divider.component";
 import FormInput from "../form-input/form-input";
+import "./order-form.styles.css";
 
-class Form extends React.Component {
+class OrderForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,9 +43,6 @@ class Form extends React.Component {
   validate = () => {
     const { qty, email, ccNum, exp } = this.state;
 
-    let isError = false;
-    const dateRe = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-
     const errors = {
       qtyError: "",
       emailError: "",
@@ -51,25 +51,31 @@ class Form extends React.Component {
         expError: "",
       },
     };
+    let isError = false;
 
     if (qty === 0) {
       isError = true;
       errors.qtyError = "Please select a quantity";
     }
-
-    if (email.indexOf("@") === -1) {
+    if (qty > 3) {
       isError = true;
-      errors.emailError = "Requires valid email";
+      errors.qtyError = "Please select no more than three";
     }
-    if (ccNum.length != 16) {
-      isError = true;
-      errors.ccNumError = "Invalid Credit Card Number";
-    }
-    // if (exp != exp.match(dateRe)) {
-    //   isError = true;
-    //   errors.expError = "please enter a valid date";
-    // }
 
+    if (!/^\w+@\w+\.[A-Za-z]+$/.test(email)) {
+      isError = true;
+      errors.emailError = "Please enter a valid email address";
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(exp)) {
+      isError = true;
+      errors.expError = "Please enter a valid expiration date";
+    }
+
+    if (!/^\d{16}$/.test(ccNum)) {
+      isError = true;
+      errors.ccNumError = "Please enter a valid credit card number";
+    }
     this.setState(errors);
     return isError;
   };
@@ -137,69 +143,83 @@ class Form extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <span>Your Order</span>
-          <div>
+          <span className="headers">Your Order</span>
+          <div className="form-inline">
             <FormInput
               type="number"
               name="qty"
-              label="Quantity"
+              label="Qty*"
               required
-              max="3"
+              min="0"
               placeholder="Max 3"
-              value={qty}
+              value={qty || ""}
+              error={qtyError}
               changeHandler={this.changeHandler}
             />
-            {qtyError}
             <FormInput
               type="text"
               required
               placeholder="0.00"
               readOnly={true}
-              label="Total $"
+              label="Total Price"
+              required
               name="total"
-              value={totalPrice}
+              value={totalPrice || ""}
             />
           </div>
-          <span>Contact</span>
-          <div>
+          <Divider />
+          <span className="headers">Contact</span>
+          <div className>
             <FormInput
               type="text"
               name="email"
-              label="email"
+              label="Email Address"
+              required
               placeholder="Email Address"
-              value={email}
+              value={email.trim()}
+              error={emailError}
               changeHandler={this.changeHandler}
             />
-            {emailError}
           </div>
-          <span>Billing Information</span>
-          <div>
+          <Divider />
+          <span className="headers">Billing Information</span>
+          <div className="form-inline">
             <FormInput
               type="text"
               name="ccNum"
               label="Credit Card Number"
+              required
               placeholder="Credit Card Number"
-              value={ccNum}
+              value={ccNum.trim()}
+              error={ccNumError}
               changeHandler={this.changeHandler}
             />
-            {ccNumError}
+
             <FormInput
               type="text"
               name="exp"
               label="Expiration Date"
+              required
               placeholder="mm/yy"
-              value={exp}
+              value={exp.trim()}
+              error={expError}
               changeHandler={this.changeHandler}
             />
-            {expError}
           </div>
+          <Divider />
           <div>
-            <input type="submit" />
+            <CustomButton type="submit" value="Submit Form">
+              Place Your Order
+            </CustomButton>
           </div>
         </form>
-        {backEndErrors ? <div>{backEndErrors}</div> : <div>{success}</div>}
+        {backEndErrors ? (
+          <div className="backend-error">{backEndErrors}</div>
+        ) : (
+          <div className="success-message">{success}</div>
+        )}
       </div>
     );
   }
 }
-export default Form;
+export default OrderForm;
