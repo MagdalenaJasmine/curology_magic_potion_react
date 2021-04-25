@@ -1,9 +1,6 @@
 .form-input {
-  /* left: 0%;
-  right: 0%; */
-  top: 30%;
-  /* bottom: 0%;  */
-  width: 50%;
+  width: 100%;
+  display: flex;
   padding: 12px 20px;
   border: 1px solid #949494;
   box-sizing: border-box;
@@ -11,18 +8,9 @@
 }
 
 .form-label {
-  width: 296px;
-  height: 80px;
-  left: 412px;
-  top: 588px;
   color: #555555;
 }
 .field-error {
-  width: 170px;
-  left: 0px;
-  top: 80.77%;
-  bottom: 0%;
-
   font-family: Inter;
   font-style: normal;
   font-weight: normal;

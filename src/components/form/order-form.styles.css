@@ -1,0 +1,26 @@
+.headers {
+  display: flex;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  color: #000000;
+}
+.backend-error {
+  display: flex;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+
+  color: #bd200f;
+}
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
