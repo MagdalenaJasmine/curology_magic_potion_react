@@ -1,5 +1,6 @@
 .headers {
   display: flex;
+  margin-bottom: 20px;
 
   font-family: Inter;
   font-style: normal;
@@ -19,8 +20,24 @@
 
   color: #bd200f;
 }
-.form-inline {
+.success-message {
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+
+  color: black;
+}
+.form-inline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
 }

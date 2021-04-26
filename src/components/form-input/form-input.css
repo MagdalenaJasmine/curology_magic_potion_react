@@ -1,7 +1,7 @@
 .form-input {
   width: 100%;
   display: flex;
-  padding: 12px 20px;
+  padding: 12px;
   border: 1px solid #949494;
   box-sizing: border-box;
   border-radius: 8px;
@@ -9,6 +9,7 @@
 
 .form-label {
   color: #555555;
+  margin-bottom: 15px;
 }
 .field-error {
   font-family: Inter;

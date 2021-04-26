@@ -23,9 +23,9 @@ class OrderForm extends React.Component {
   }
 
   changeHandler = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
     this.setState({
-      [name]: value,
+      [name]: type === "number" ? parseInt(value) : value,
     });
     if (name === "qty") {
       this.setTotal(event);
@@ -92,7 +92,7 @@ class OrderForm extends React.Component {
           "Content-Type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify({
-          qty: qty,
+          quantity: qty,
           total: total,
           email: email,
           payment: {
@@ -119,6 +119,7 @@ class OrderForm extends React.Component {
               ccNumError: "",
               exp: "",
               expError: "",
+              backEndErrors: "",
               success: "Congratulations your order has been placed",
             });
           }
@@ -145,27 +146,31 @@ class OrderForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <span className="headers">Your Order</span>
           <div className="form-inline">
-            <FormInput
-              type="number"
-              name="qty"
-              label="Qty*"
-              required
-              min="0"
-              placeholder="Max 3"
-              value={qty || ""}
-              error={qtyError}
-              changeHandler={this.changeHandler}
-            />
-            <FormInput
-              type="text"
-              required
-              placeholder="0.00"
-              readOnly={true}
-              label="Total Price"
-              required
-              name="total"
-              value={totalPrice || ""}
-            />
+            <div>
+              <FormInput
+                type="number"
+                name="qty"
+                label="Qty*"
+                required
+                min="0"
+                placeholder="Max 3"
+                value={qty || ""}
+                error={qtyError}
+                changeHandler={this.changeHandler}
+              />
+            </div>
+            <div>
+              <FormInput
+                type="text"
+                required
+                placeholder="0.00"
+                readOnly={true}
+                label="Total Price"
+                required
+                name="total"
+                value={totalPrice || ""}
+              />
+            </div>
           </div>
           <Divider />
           <span className="headers">Contact</span>
@@ -207,7 +212,7 @@ class OrderForm extends React.Component {
             />
           </div>
           <Divider />
-          <div>
+          <div className="button">
             <CustomButton type="submit" value="Submit Form">
               Place Your Order
             </CustomButton>
