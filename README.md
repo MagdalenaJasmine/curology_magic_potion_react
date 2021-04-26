@@ -6,8 +6,8 @@ This web app gives users a simple form to place orders for this new and exciting
 This site was built using a React.js front-end and Ruby on Rails back-end 
 
 You can view the deployed site here: 
-* Frontend -   https://git.heroku.com/curology-react.git
-* Backend- https://git.heroku.com/curology-rails-api.git
+* Frontend -   https://curology-react.herokuapp.com/
+* Backend- https://curology-rails-api.herokuapp.com/
 
 
 ## Frontend Installation 
